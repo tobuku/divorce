@@ -1,0 +1,172 @@
+<!-- water.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Water Support</title>
+  <meta name="description" content="Water support. Emotional regulation, therapy, grief support, and crisis resources."/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div aria-hidden="true" class="kls-progress"></div>
+
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div>
+          Elements Support Directory
+          <small>Water</small>
+        </div>
+      </div>
+
+      <nav>
+        <a class="kls-magnet" href="index.html">Home</a>
+        <a class="kls-magnet" href="earth.html">Earth</a>
+        <a class="kls-magnet" href="water.html">Water</a>
+        <a class="kls-magnet" href="air.html">Air</a>
+        <a class="kls-magnet" href="fire.html">Fire</a>
+        <a class="btn kls-magnet" href="contact.html">Get help</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <h1 class="h1 kls-heading">Water</h1>
+        <p class="lead kls-reveal">
+          Water is emotional support. It helps you regulate, grieve, and rebuild safety.
+          Choose support that matches your nervous system today.
+        </p>
+
+        <div class="card kls-reveal">
+          <div class="pill water"><span class="dot"></span>Emotional support</div>
+          <ul class="list">
+            <li>Divorce support groups, online and local</li>
+            <li>Individual therapy, grief, betrayal, trauma informed</li>
+            <li>EMDR or somatic therapy providers</li>
+            <li>Divorce coach focused on emotional regulation</li>
+            <li>Guided journaling circles or women’s circles</li>
+            <li>Meditation and mindfulness instructors, divorce focused</li>
+            <li>Breathwork facilitators, gentle, nervous system focused</li>
+            <li>Sound baths or restorative yoga practitioners</li>
+            <li>Spiritual care options, chaplain, faith based support groups</li>
+            <li>Crisis support resources, hotlines, safety planning services</li>
+          </ul>
+        </div>
+
+        <div class="grid-2">
+          <div class="card kls-reveal">
+            <h2 class="section-title kls-heading">Fast start</h2>
+            <ul class="list">
+              <li>Pick one support group. Attend once.</li>
+              <li>Book one therapy intake.</li>
+              <li>Create a short grounding plan.</li>
+              <li>Write a safety plan if risk exists.</li>
+            </ul>
+          </div>
+
+          <div class="card kls-reveal">
+            <h2 class="section-title kls-heading">What to ask providers</h2>
+            <ul class="list">
+              <li>Trauma training and approach</li>
+              <li>Session structure and pacing</li>
+              <li>Homework style and between session support</li>
+              <li>Sliding scale or insurance options</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <a class="btn kls-magnet" href="contact.html">Request help</a>
+          <a class="btn btn-outline kls-magnet" href="index.html" style="margin-left:.75rem;">Back to home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div>© <span id="year"></span> Elements Support Directory</div>
+      <div class="footer-links">
+        <a class="kls-magnet" href="earth.html">Earth</a>
+        <a class="kls-magnet" href="air.html">Air</a>
+        <a class="kls-magnet" href="fire.html">Fire</a>
+        <a class="kls-magnet" href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    (function () {
+      const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduceMotion) return;
+      if (!window.gsap || !window.ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      function splitLetters(el) {
+        if (!el) return;
+        if (el.dataset.splitDone === "1") return;
+        const text = (el.textContent || "").trimEnd();
+        el.textContent = "";
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < text.length; i++) {
+          const ch = text[i];
+          const span = document.createElement("span");
+          span.className = "kls-char";
+          span.textContent = ch === " " ? "\u00A0" : ch;
+          frag.appendChild(span);
+        }
+        el.appendChild(frag);
+        el.classList.add("kls-split");
+        el.dataset.splitDone = "1";
+      }
+
+      function bounceHeading(el) {
+        splitLetters(el);
+        const chars = el.querySelectorAll(".kls-char");
+        if (!chars.length) return;
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 90%",
+          onEnter: () => gsap.fromTo(chars,{y:-90,opacity:0,filter:"blur(10px)"},{y:0,opacity:1,filter:"blur(0px)",duration:1.1,ease:"bounce.out",stagger:0.02,overwrite:true}),
+          onEnterBack: () => gsap.fromTo(chars,{y:-90,opacity:0,filter:"blur(10px)"},{y:0,opacity:1,filter:"blur(0px)",duration:1.1,ease:"bounce.out",stagger:0.02,overwrite:true})
+        });
+      }
+
+      document.querySelectorAll(".kls-heading").forEach(bounceHeading);
+      gsap.utils.toArray(".kls-reveal").forEach((el) => {
+        gsap.fromTo(el,{y:18,opacity:0,filter:"blur(10px)"},{y:0,opacity:1,filter:"blur(0px)",scrollTrigger:{trigger:el,start:"top 88%",toggleActions:"play none none reverse"}});
+      });
+
+      const hoverOk = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      function setPointerGlow(el, e) {
+        const r = el.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        el.style.setProperty("--mx", x + "%");
+        el.style.setProperty("--my", y + "%");
+      }
+      if (hoverOk) {
+        document.querySelectorAll(".kls-magnet, .btn").forEach((el) => {
+          const strength = el.classList.contains("btn") ? 0.22 : 0.18;
+          el.addEventListener("mousemove", (e) => {
+            setPointerGlow(el, e);
+            const r = el.getBoundingClientRect();
+            const x = e.clientX - r.left - r.width / 2;
+            const y = e.clientY - r.top - r.height / 2;
+            gsap.to(el, { x: x * strength, y: y * strength, duration: 0.18, ease: "power2.out" });
+          });
+          el.addEventListener("mouseleave", () => {
+            gsap.to(el, { x: 0, y: 0, duration: 0.55, ease: "elastic.out(1, 0.35)" });
+          });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
